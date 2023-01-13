@@ -8,17 +8,16 @@ const playerSchema = new Schema({
     },
     surname: {
         type: String,
-        required: [true, 'please add a name']
+        required: [true, 'please add a surname']
     },
     username: {
         type: String,
-        required: [true, 'please add a name'],
+        required: [true, 'please add a username'],
         unique: true
     },
     password: {
         type: String,
         required: [true, 'please add a password'],
-        
     },    
     lastAuthentication: Date,
 },
