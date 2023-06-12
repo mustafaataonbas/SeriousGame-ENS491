@@ -46,4 +46,31 @@ app.get('/players', async (req, res) => {
         throw new error('Invalid player data')
     }
 });
+
+app.post('/signin', async (req, res) => {
+    const {username, password} = req.body;
+    console.log("here it is the body", req.body)
+
+    if(!username || !password){
+        res.status(400)
+        throw new Error('Please include all fields!')
+    }
+
+    const player = await Player.findOne({username})
+
+    if(player && await bcrypt.compare(password, player.password)) {
+        res.status(200).json({
+            _id: player._id,
+            name: player.name,
+            surname: player.surname,
+            username: player.username,
+            password: player.password,
+            lastAuthentication: player.lastAuthentication
+        });
+    } else {
+        res.status(401)
+        throw new Error('Invalid username or password')
+    }
+});
+
 }
